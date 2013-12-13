@@ -10,10 +10,9 @@ var apiExternalMusic = function($http) {
             format: 5,
             maxResults: 10,
             v: 2,
-            alt: 'jsonc'
-            
+            alt: 'jsonc',
         };
-        return $http.jsonp(url, {
+        return $http.get(url, {
             params: params
         });
   	}	
