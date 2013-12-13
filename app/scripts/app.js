@@ -4,7 +4,8 @@ angular.module('magicListenApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  
 ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -13,6 +14,6 @@ angular.module('magicListenApp', [
         controller: 'MainCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: ''
       });
   });
