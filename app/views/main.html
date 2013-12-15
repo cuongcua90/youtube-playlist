@@ -1,2 +1,10 @@
-{{testd}}
-<div ng-click = "searchYoutube('Great video')">Beautiful click</div>
+<input type="text" ng-model="searchKeyword">
+<div ng-click="searchYoutube(searchKeyword)">Beautiful click</div>
+<div ng-repeat="videoData in resultYoutubes['items']" style="float:left">
+	<img src="{{videoData['thumbnail']['sqDefault']}}">
+	{{videoData['title']}}
+	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+</div>
+<div class="debug">
+	
+</div>

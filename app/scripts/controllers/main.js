@@ -12,7 +12,7 @@ angular.module('magicListenApp')
     $scope.searchYoutube = function(keyword){
     	ExternalMusicService.searchYoutube(keyword)
     		.success(function(response){
-    			$log.log('test log 2');
+          $scope.resultYoutubes = response['data'];
     		});
     }
 
