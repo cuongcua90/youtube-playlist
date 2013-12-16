@@ -2,7 +2,7 @@
 <div ng-click="searchYoutube(searchKeyword)">Beautiful click</div>
 <div ng-repeat="videoData in resultYoutubes['items']" style="float:left">
 	<img src="{{videoData['thumbnail']['sqDefault']}}">
-	{{videoData['title']}}
+	<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
 	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
 </div>
 <div class="debug">
