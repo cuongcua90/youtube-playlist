@@ -1,9 +1,14 @@
 <input type="text" ng-model="searchKeyword">
 <div ng-click="searchYoutube(searchKeyword)">Beautiful click</div>
 <div ng-repeat="videoData in resultYoutubes['items']" style="float:left">
-	<img src="{{videoData['thumbnail']['sqDefault']}}">
+	<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
 	<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
+	{{videoData['id']}}
 	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+</div>
+<div ng-repeat="videoRelated in videoRelateds['items']">
+	<img src="{{videoRelated['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoRelated['id'])">
+	
 </div>
 <div class="debug">
 	

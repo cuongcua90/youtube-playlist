@@ -15,5 +15,11 @@ angular.module('magicListenApp')
           $scope.resultYoutubes = response['data'];
     		});
     }
+    $scope.getRelatedYoutubeVideo = function(videoId){
+      ExternalMusicService.getRelatedYoutubeVideo(videoId)
+        .success(function(response){
+          $scope.videoRelateds = response['data'];
+        });
+    }
 
   });
