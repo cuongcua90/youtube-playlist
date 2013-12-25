@@ -7,8 +7,11 @@ angular.module('magicListenApp')
       'AngularJS',
       'Karma'
     ];
-    $log.log('test log');
-    $scope.test = 'beautiful';
+
+    // $scope.resultYoutubes
+    // $scope.videoRelated
+    // $scope.trackLastFm
+
     $scope.searchYoutube = function(keyword){
     	ExternalMusicService.searchYoutube(keyword)
     		.success(function(response){
@@ -19,6 +22,27 @@ angular.module('magicListenApp')
       ExternalMusicService.getRelatedYoutubeVideo(videoId)
         .success(function(response){
           $scope.videoRelateds = response['data'];
+        });
+    }
+      
+    $scope.searchLastFmTrackInfo = function(keyword){
+      ExternalMusicService.track.search(keyword)
+        .success(function(response){
+          $scope.lastFmTracks = (response['results']['trackmatches']['track']);
+        });
+    }
+
+    $scope.searchLastFmAlbumInfo = function(keyword){
+      ExternalMusicService.album.search(keyword)
+        .success(function(response){
+          //$scope.lastFmAlbums = (response['results']['trackmatches']['track']);
+        });
+    }
+
+    $scope.searchLastFmArtistInfo = function(keyword){
+      ExternalMusicService.artist.search(keyword)
+        .success(function(response){
+          //$scope.lastFmArtists = (response['results']['trackmatches']['track']);
         });
     }
 

@@ -1,10 +1,49 @@
-<input type="text" ng-model="searchKeyword">
-<div ng-click="searchYoutube(searchKeyword)">Beautiful click</div>
-<div ng-repeat="videoData in resultYoutubes['items']" style="float:left">
+<form class="form-inline" role="form">
+	<div class="form-group">
+		<input type="text" class="form-control" ng-model="searchKeyword">
+	</div>
+	<button type="submit" class="btn btn-default" ng-click="searchYoutube(searchKeyword);searchLastFmTrackInfo(searchKeyword);searchLastFmAlbumInfo(searchKeyword); searchLastFmArtistInfo(searchKeyword)">Beautiful click</button>
+</form>
+
+<div class="row">
+  <div class="col-md-5">
+  	Beautiful
+  	<div ng-repeat="videoData in resultYoutubes['items']" style="float:left">
 	<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
 	<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
-	{{videoData['id']}}
+  </div>
+</div>
+  <div class="col-md-4">
+  	Search result
+  	<div ng-repeat="trackData in lastFmTracks">
+  		<div>
+	  		<img src="{{trackData['image'][0]['#text']}}" style="float:left">
+			{{trackData['name']}}
+			{{trackData['artist']}}
+		</div>
+		<div style="clear:both"></div>
+
 	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+	</div>
+
+	<div ng-repeat="trackData in lastFmAlbums">
+  		<div>
+	  		
+		</div>
+		<div style="clear:both"></div>
+
+	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+	</div>
+  </div>
+  <div class="col-md-2">
+  	Playlist
+  	<div ng-repeat="videoData in resultYoutubes['items']">
+	<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
+	<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
+	
+	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+	</div>
+  </div>
 </div>
 <div ng-repeat="videoRelated in videoRelateds['items']">
 	<img src="{{videoRelated['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoRelated['id'])">
