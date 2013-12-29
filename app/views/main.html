@@ -6,49 +6,55 @@
 </form>
 
 <div class="row">
-  <div class="col-md-5">
-  	Beautiful
-  	<div ng-repeat="videoData in resultYoutubes['items']" style="float:left">
-	<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
-	<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
-  </div>
-</div>
-  <div class="col-md-4">
-  	Search result
-  	<div ng-repeat="trackData in lastFmTracks">
-  		<div>
-	  		<img src="{{trackData['image'][0]['#text']}}" style="float:left">
-			{{trackData['name']}}
-			{{trackData['artist']}}
+	<div id ="player"></div>
+	<button ng-click="playerControl.nextVideo();">Next Video</button>
+	<button ng-click="playerControl.stopVideo();">stop video</button>
+	<button ng-click="playerControl.playVideo();">stop video</button>
+	<div class="col-md-5">
+		Beautiful
+		<div class="col-md-8" ng-repeat="videoData in resultYoutubes['items']">
+			<img src="{{videoData['thumbnail']['sqDefault']}}" style="float:left" ng-click="getRelatedYoutubeVideo(videoData['id'])">
+			<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
+			<div style="clear:both"></div>
 		</div>
-		<div style="clear:both"></div>
-
-	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
 	</div>
+	<div class="col-md-5">
+		Search result
+		<div ng-repeat="trackData in lastFmTracks">
+			<div>
+				<img src="{{trackData['image'][0]['#text']}}" style="float:left">
+				{{trackData['name']}}
+				{{trackData['artist']}}
+			</div>
+			<div style="clear:both"></div>
 
-	<div ng-repeat="trackData in lastFmAlbums">
-  		<div>
-	  		
+			<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
 		</div>
-		<div style="clear:both"></div>
 
-	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+		<div ng-repeat="trackData in lastFmAlbums">
+			<div>
+				
+			</div>
+			<div style="clear:both"></div>
+
+			<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+		</div>
 	</div>
-  </div>
-  <div class="col-md-2">
-  	Playlist
-  	<div ng-repeat="videoData in resultYoutubes['items']">
-	<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
-	<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
-	
-	<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+	<div class="col-md-2">
+		Playlist
+
+		<div ng-repeat="videoData in resultYoutubes['items']">
+			<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
+			<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
+			
+			<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
+		</div>
 	</div>
-  </div>
-</div>
+<div class="debug">
+	<!-- <pre>{{resultYoutubes['items']|json}}</pre>; -->
+	<pre>{{playerControl|json}}</pre>;
+</div>	
 <div ng-repeat="videoRelated in videoRelateds['items']">
 	<img src="{{videoRelated['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoRelated['id'])">
-	
-</div>
-<div class="debug">
 	
 </div>
