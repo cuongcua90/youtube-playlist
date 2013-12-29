@@ -1,0 +1,14 @@
+{
+  "name": "soundmanager",
+  "homepage": "https://github.com/scottschiller/SoundManager2",
+  "_release": "7ddf2895d3",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7ddf2895d3d7d7ae4ecf442556e9dbd4e4b98fd1"
+  },
+  "_source": "git://github.com/scottschiller/SoundManager2.git",
+  "_target": "*",
+  "_originalSource": "soundmanager",
+  "_direct": true
+}
