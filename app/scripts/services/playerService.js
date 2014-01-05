@@ -39,7 +39,7 @@ var playerService = function($window, $log){
 				player.playVideo();
 			}
 			else{
-				player.loadVideoById(this.config.list[this.config.index]['id']);
+				//player.loadVideoById(this.config.list[this.config.index]['id']);
 			}
 		},
 		nextVideo: function(){

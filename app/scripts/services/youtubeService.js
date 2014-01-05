@@ -16,7 +16,7 @@ var apiExternalMusic = function($http) {
   		var url = youtubeApiUrl+ encodeURIComponent(keyword); 
   		var params = {
             format: 5,
-            maxResults: 10,
+            'max-results': 12,
             v: 2,
             alt: 'jsonc',
         };

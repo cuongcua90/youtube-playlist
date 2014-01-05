@@ -26,19 +26,19 @@ angular.module('magicListenApp')
           $scope.resultYoutubes = response['data'];
           $scope.playerControl.config.list = response['data']['items'];
           player = new YT.Player('player', {
-            height: '390',
-            width: '640',
+            height: '200',
+            width: '200',
             videoId: $scope.playerControl.config.list[$scope.playerControl.config.index]['id'],
             playerVars: {
               controls: '0',
-              color: 'red'
+              color: 'red',
+              showinfo: '0'
             },
             events: {
               'onReady': onPlayerReady,
               'onStateChange': onPlayerStateChange
             }
           });   
-          //$scope.playerControl.playVideo();
     		});
 
     }
@@ -69,5 +69,6 @@ angular.module('magicListenApp')
           //$scope.lastFmArtists = (response['results']['trackmatches']['track']);
         });
     }
+    $scope.searchYoutube('Thu Hien');
 
   });
