@@ -1,10 +1,16 @@
-<div class="navbar navbar-fixed-bottom navbar-inverse">
-	<div id ="player"></div>
+<div class="navbar navbar-fixed-bottom navbar-inverse text-center" ng-show="playerControl.config.isValid">
+	<i class="fa fa-pause fa-inverse player-icon" ng-show="!playerControl.config.isPaused" ng-click="playerControl.stopVideo();"></i>
+	<i class="fa fa-play fa-inverse player-icon" ng-show="playerControl.config.isPaused" ng-click="playerControl.playVideo();"></i>
+	<i class="fa fa-step-forward fa-inverse player-icon" ng-click="playerControl.nextVideo();"></i>
+	<i class="fa fa-step-backward fa-inverse player-icon" ng-click="playerControl.previousVideo();"></i>
 </div>
 <div class="row">
 	<div class="col-md-6">
+		<div class="youtube-video">
+			<div id="player"></div>
+		</div>
 		<div class="list-youtube">
-			<ul ng-repeat="videoData in resultYoutubes['items']" class="media-list">
+			<ul ng-repeat="videoData in playerControl.config.list track by $index" class="media-list">
 				<li class="media">
 					<div class="pull-left">
 						{{$index}}
@@ -14,7 +20,9 @@
 					</a>
 					<div class="media-body">
 						<span class="media-heading">{{videoData['title']}}</span>
+
 					</div>
+					
 				</li>
 			</ul>
 		</div>
@@ -29,8 +37,8 @@
 			</form>
 		</div>
 		<div class="row">
-			<div ng-class={"row":$index%3==2} ng-repeat="videoData in resultYoutubes['items']">
-				<div class="col-md-4">
+			<div ng-class={"row":$index%3==2} ng-repeat="videoData in resultYoutubes['items'] track by $index">
+				<div class="col-md-4" ng-click="addVideoItem(videoData)">
 					<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
 					<p><a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a></p>
 				</div>
@@ -44,9 +52,7 @@
 </div>
 <div>
 	
-	<button ng-click="playerControl.nextVideo();">Next Video</button>
-	<button ng-click="playerControl.stopVideo();">Stop video</button>
-	<button ng-click="playerControl.playVideo();">Play video</button>
+	
 	<div class="col-md-5">
 		Beautiful
 		<div class="col-md-8" ng-repeat="videoData in resultYoutubes['items']">

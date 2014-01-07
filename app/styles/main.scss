@@ -7,6 +7,12 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
     overflow: scroll;   
     overflow-x : hidden;
 }
+.player-icon {
+    margin-top:15px; 
+    margin-right: 20px;
+    font-size: 20px;
+    line-height: 18px; 
+}
 .media-object {
     width: 64px;
     height: 36px;

@@ -18,10 +18,14 @@ var playerService = function($window, $log){
 			isShow: false,
 			isShuffle: false,
 			isRepeate: false,
+			isPaused: false,
 			index: 0,
+			isValid: false,
 			list: [],
 			loadVideoByIndex: function(){
-				player.loadVideoById(this.list[this.index]['id']);
+				if (this.list.length > this.index){
+					player.loadVideoById(this.list[this.index]['id']);
+				}
 			}
 		},
 
@@ -31,12 +35,14 @@ var playerService = function($window, $log){
 
 		stopVideo: function(){
 			player.stopVideo();
+			this.config.isPaused = true;
 		},
 
 		playVideo: function(){
 			var duration = player.getDuration();
 			if (duration>0){
 				player.playVideo();
+				this.config.isPaused = false;
 			}
 			else{
 				//player.loadVideoById(this.config.list[this.config.index]['id']);
@@ -47,6 +53,7 @@ var playerService = function($window, $log){
 				if (this.config.index < this.config.list.length){
 					this.config.index++;
 					this.config.loadVideoByIndex();
+					this.config.isPaused = false;
 				}
 			}
 		},
@@ -55,6 +62,7 @@ var playerService = function($window, $log){
 				if (this.config.index > 0){
 					this.config.index --;
 					this.config.loadVideoByIndex();
+					this.config.isPaused = false;
 				}
 			}
 		},

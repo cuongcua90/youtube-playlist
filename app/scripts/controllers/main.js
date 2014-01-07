@@ -9,7 +9,6 @@ angular.module('magicListenApp')
     ];
 
     $scope.playerControl = PlayerService;
-    
     //$scope.playerControl.config.volume = 30;
 
     $scope.stopVideo = function(){
@@ -20,25 +19,31 @@ angular.module('magicListenApp')
       return ($scope.playerControl.config.list.length > 0);
     }
 
+    $scope.addVideoItem = function(item){
+      $scope.playerControl.config.list.push(item);
+      if (!player){
+        player = new YT.Player('player', {
+          height: '200',
+          width: '200',
+          videoId: $scope.playerControl.config.list[$scope.playerControl.config.index]['id'],
+          playerVars: {
+            controls: '0',
+            color: 'red',
+            showinfo: '0'
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+        $scope.playerControl.config.isValid = true;
+      }
+    }
     $scope.searchYoutube = function(keyword){
     	ExternalMusicService.searchYoutube(keyword)
     		.success(function(response){
           $scope.resultYoutubes = response['data'];
-          $scope.playerControl.config.list = response['data']['items'];
-          player = new YT.Player('player', {
-            height: '200',
-            width: '200',
-            videoId: $scope.playerControl.config.list[$scope.playerControl.config.index]['id'],
-            playerVars: {
-              controls: '0',
-              color: 'red',
-              showinfo: '0'
-            },
-            events: {
-              'onReady': onPlayerReady,
-              'onStateChange': onPlayerStateChange
-            }
-          });   
+          //$scope.playerControl.config.list = response['data']['items'];
     		});
 
     }
