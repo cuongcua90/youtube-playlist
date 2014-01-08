@@ -11,22 +11,22 @@
 			<div id="player"></div>
 		</div>
 		<div class="list-youtube">
-			<ul ng-repeat="videoData in playerControl.config.list track by $index" class="media-list">
-				<li class="media" ng-click="playerControl.changeIndex($index)" ng-class="{'media-playing':playerControl.config.index == $index}">
-					<div class="pull-left" ng-show="playerControl.config.index!=$index">
+			<div class="list-group">
+				<a class="list-group-item" ng-repeat="videoData in playerControl.config.list track by $index" ng-click="playerControl.changeIndex($index)" ng-class="{'active':playerControl.config.index == $index}">
+					<span ng-show="playerControl.config.index!=$index">
 						{{$index+1}}
-					</div>
-					<div class="pull-left" ng-show="playerControl.config.index==$index">
+					</span>
+					<span ng-show="playerControl.config.index==$index">
 						<i class="fa fa-play"></i>
-					</div>
-					<a class="pull-left" href="#">
+					</span>
+					<!-- <a class="pull-left" href="#">
 						<img class="media-object" src="{{videoData['thumbnail']['sqDefault']}}">
-					</a>
-					<div class="media-body">
-						<span class="media-heading">{{videoData['title']}}</span>
-					</div>
-				</li>
-			</ul>
+					</a> -->
+					
+					<span class="video-title">{{videoData['title']}}</span>
+					<i class="fa fa-times pull-right" ng-click="removeVideoByIndex($index)"></i>
+				</a>
+			</div>
 		</div>
 	</div>
 	<div class="col-md-6">

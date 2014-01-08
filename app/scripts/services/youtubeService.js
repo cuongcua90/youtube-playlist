@@ -7,7 +7,6 @@ var apiExternalMusic = function($http) {
 
     var call = function(method, params, keyword){
       var url = lastFmUrl + "?method="+method;  
-
     }
 
     var musicService = {};
@@ -37,7 +36,6 @@ var apiExternalMusic = function($http) {
     }
 
     var call = function(method, keyword, params){
-      
       params.format = 'json';
       params.api_key = lastFmApiKey;
       params.method = method;

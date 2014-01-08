@@ -9,18 +9,9 @@ angular.module('magicListenApp')
     ];
 
     $scope.playerControl = PlayerService;
-    //$scope.playerControl.config.volume = 30;
-
-    $scope.stopVideo = function(){
-      player.loadVideoById('HQ6TwrBHm3Q');
-    }
-
-    $scope.isPlayable = function(){
-      return ($scope.playerControl.config.list.length > 0);
-    }
 
     $scope.addVideoItem = function(item){
-      $scope.playerControl.config.list.push(item);
+      $scope.playerControl.addVideoItem(item);
       if (!player){
         player = new YT.Player('player', {
           height: '225',
@@ -37,6 +28,12 @@ angular.module('magicListenApp')
           }
         });
         $scope.playerControl.config.isValid = true;
+      }
+    }
+    $scope.removeVideoByIndex = function(index){
+      $scope.playerControl.config.list.splice(index,1);
+      if ($scope.playerControl.config.index == index){
+        $scope.playerControl.config.loadVideoByIndex();
       }
     }
     $scope.searchYoutube = function(keyword){

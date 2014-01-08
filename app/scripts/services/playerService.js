@@ -15,8 +15,6 @@ var playerService = function($window, $log, $rootScope){
 		$rootScope.$apply(function(){
 			playerControl.config.status = evt.data;
 		});
-		
-		$log.log(evt.data);
 	};
 	var playerControl = {
 		config : {
@@ -34,6 +32,10 @@ var playerService = function($window, $log, $rootScope){
 			}
 		},
 
+		addVideoItem: function(item){
+			this.config.list.push(item);
+		},
+	
 		isPlayable: function() {
 			return (this.config.list.length > 0);
 		},
