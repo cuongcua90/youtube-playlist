@@ -1,6 +1,7 @@
 <div class="navbar navbar-fixed-bottom navbar-inverse text-center" ng-show="playerControl.config.isValid">
-	<i class="fa fa-pause fa-inverse player-icon" ng-show="!playerControl.config.isPaused" ng-click="playerControl.stopVideo();"></i>
-	<i class="fa fa-play fa-inverse player-icon" ng-show="playerControl.config.isPaused" ng-click="playerControl.playVideo();"></i>
+	<i class="fa fa-inverse player-icon fa-pause" ng-click="playerControl.pauseVideo();" ng-show="playerControl.config.status==1"></i>
+	<i class="fa fa-play fa-inverse player-icon" ng-show="playerControl.config.status==2" ng-click="playerControl.playVideo();"></i>
+	<i class="fa fa-spinner fa-inverse fa-spin player-icon" ng-show="playerControl.config.status==3||playerControl.config.status==-1"></i>
 	<i class="fa fa-step-forward fa-inverse player-icon" ng-click="playerControl.nextVideo();"></i>
 	<i class="fa fa-step-backward fa-inverse player-icon" ng-click="playerControl.previousVideo();"></i>
 </div>
@@ -11,18 +12,19 @@
 		</div>
 		<div class="list-youtube">
 			<ul ng-repeat="videoData in playerControl.config.list track by $index" class="media-list">
-				<li class="media">
-					<div class="pull-left">
-						{{$index}}
+				<li class="media" ng-click="playerControl.changeIndex($index)" ng-class="{'media-playing':playerControl.config.index == $index}">
+					<div class="pull-left" ng-show="playerControl.config.index!=$index">
+						{{$index+1}}
+					</div>
+					<div class="pull-left" ng-show="playerControl.config.index==$index">
+						<i class="fa fa-play"></i>
 					</div>
 					<a class="pull-left" href="#">
 						<img class="media-object" src="{{videoData['thumbnail']['sqDefault']}}">
 					</a>
 					<div class="media-body">
 						<span class="media-heading">{{videoData['title']}}</span>
-
 					</div>
-					
 				</li>
 			</ul>
 		</div>

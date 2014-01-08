@@ -23,8 +23,8 @@ angular.module('magicListenApp')
       $scope.playerControl.config.list.push(item);
       if (!player){
         player = new YT.Player('player', {
-          height: '200',
-          width: '200',
+          height: '225',
+          width: '400',
           videoId: $scope.playerControl.config.list[$scope.playerControl.config.index]['id'],
           playerVars: {
             controls: '0',

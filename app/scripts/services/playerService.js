@@ -1,6 +1,6 @@
 'use strict';
 
-var playerService = function($window, $log){
+var playerService = function($window, $log, $rootScope){
 	$window.onYouTubeIframeAPIReady = function () {
 		
 	}
@@ -11,6 +11,12 @@ var playerService = function($window, $log){
 		if (evt.data == YT.PlayerState.ENDED){
 			playerControl.nextVideo();
 		}
+
+		$rootScope.$apply(function(){
+			playerControl.config.status = evt.data;
+		});
+		
+		$log.log(evt.data);
 	};
 	var playerControl = {
 		config : {
@@ -18,9 +24,8 @@ var playerService = function($window, $log){
 			isShow: false,
 			isShuffle: false,
 			isRepeate: false,
-			isPaused: false,
 			index: 0,
-			isValid: false,
+			status: -1,
 			list: [],
 			loadVideoByIndex: function(){
 				if (this.list.length > this.index){
@@ -33,16 +38,19 @@ var playerService = function($window, $log){
 			return (this.config.list.length > 0);
 		},
 
-		stopVideo: function(){
-			player.stopVideo();
-			this.config.isPaused = true;
+		pauseVideo: function(){
+			player.pauseVideo();
+		},
+
+		changeIndex: function(index){
+			this.config.index = index;
+			this.config.loadVideoByIndex();
 		},
 
 		playVideo: function(){
 			var duration = player.getDuration();
 			if (duration>0){
 				player.playVideo();
-				this.config.isPaused = false;
 			}
 			else{
 				//player.loadVideoById(this.config.list[this.config.index]['id']);
@@ -53,7 +61,6 @@ var playerService = function($window, $log){
 				if (this.config.index < this.config.list.length){
 					this.config.index++;
 					this.config.loadVideoByIndex();
-					this.config.isPaused = false;
 				}
 			}
 		},
@@ -62,7 +69,6 @@ var playerService = function($window, $log){
 				if (this.config.index > 0){
 					this.config.index --;
 					this.config.loadVideoByIndex();
-					this.config.isPaused = false;
 				}
 			}
 		},
@@ -73,4 +79,4 @@ var playerService = function($window, $log){
 };
 
 angular.module('magicListenApp')
-  .factory('PlayerService', ['$window','$log',playerService]);
+  .factory('PlayerService', ['$window','$log', '$rootScope', playerService]);
