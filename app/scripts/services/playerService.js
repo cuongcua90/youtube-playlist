@@ -45,8 +45,10 @@ var playerService = function($window, $log, $rootScope){
 		},
 
 		changeIndex: function(index){
-			this.config.index = index;
-			this.config.loadVideoByIndex();
+			if (this.config.index!==index){
+				this.config.index = index;
+				this.config.loadVideoByIndex();
+			}
 		},
 
 		playVideo: function(){

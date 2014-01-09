@@ -33,8 +33,12 @@ angular.module('magicListenApp')
     $scope.removeVideoByIndex = function(index){
       $scope.playerControl.config.list.splice(index,1);
       if ($scope.playerControl.config.index === index){
+        if (index === $scope.playerControl.config.list.length){
+          $scope.playerControl.config.index--;
+        }
         $scope.playerControl.config.loadVideoByIndex();
       }
+
     }
     $scope.searchYoutube = function(keyword){
     	ExternalMusicService.searchYoutube(keyword)
