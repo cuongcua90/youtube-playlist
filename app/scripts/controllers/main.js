@@ -32,7 +32,7 @@ angular.module('magicListenApp')
     }
     $scope.removeVideoByIndex = function(index){
       $scope.playerControl.config.list.splice(index,1);
-      if ($scope.playerControl.config.index == index){
+      if ($scope.playerControl.config.index === index){
         $scope.playerControl.config.loadVideoByIndex();
       }
     }

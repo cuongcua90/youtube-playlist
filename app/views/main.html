@@ -12,11 +12,11 @@
 		</div>
 		<div class="list-youtube">
 			<div class="list-group">
-				<a class="list-group-item" ng-repeat="videoData in playerControl.config.list track by $index" ng-click="playerControl.changeIndex($index)" ng-class="{'active':playerControl.config.index == $index}">
-					<span ng-show="playerControl.config.index!=$index">
+				<a class="list-group-item" ng-repeat="videoData in playerControl.config.list track by $index" ng-click="playerControl.changeIndex($index)" ng-class="{'active':playerControl.config.index === $index}">
+					<span ng-show="playerControl.config.index!==$index">
 						{{$index+1}}
 					</span>
-					<span ng-show="playerControl.config.index==$index">
+					<span ng-show="playerControl.config.index===$index">
 						<i class="fa fa-play"></i>
 					</span>
 					<!-- <a class="pull-left" href="#">
@@ -24,7 +24,7 @@
 					</a> -->
 					
 					<span class="video-title">{{videoData['title']}}</span>
-					<i class="fa fa-times pull-right" ng-click="removeVideoByIndex($index)"></i>
+					<i class="fa fa-times pull-right" ng-click="removeVideoByIndex($index);$event.stopPropagation()"></i>
 				</a>
 			</div>
 		</div>
