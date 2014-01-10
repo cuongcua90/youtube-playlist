@@ -35,6 +35,22 @@ var apiExternalMusic = function($http) {
       });
     }
 
+    musicService.suggestQueries = function(keyword){ 
+      var url = "http://suggestqueries.google.com/complete/search";
+      var params = {
+        //hl: "vn",
+        ds: "yt",
+        client: "youtube",
+        hjson: "t",
+        q: keyword,
+        callback:"JSON_CALLBACK",
+      }
+      return $http.jsonp(url, {
+          params: params
+      });
+
+    }
+
     var call = function(method, keyword, params){
       params.format = 'json';
       params.api_key = lastFmApiKey;

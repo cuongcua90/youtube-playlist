@@ -62,6 +62,14 @@ angular.module('magicListenApp')
         });
     }
 
+    $scope.suggestQueries = function(keyword){
+     
+      ExternalMusicService.suggestQueries(keyword)
+        .success(function(response){
+          $log.log(response);
+        }); 
+    }
+
     $scope.searchLastFmAlbumInfo = function(keyword){
       ExternalMusicService.album.search(keyword)
         .success(function(response){
