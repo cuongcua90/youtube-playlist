@@ -1,21 +1,21 @@
 'use strict';
 
 angular.module('magicListenApp')
-  .controller('MainCtrl', function ($scope, $log, $window, ExternalMusicService, PlayerService) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, $log, $window, $http, ExternalMusicService, PlayerService) {
 
-    $scope.playerControl = PlayerService;
-
+    $scope.searchAll = function(keyword){
+      $scope.searchYoutube(keyword);
+      $scope.searchLastFmTrackInfo(keyword);
+      $scope.searchLastFmAlbumInfo(keyword); 
+      $scope.searchLastFmArtistInfo(keyword);    
+    }
     $scope.addVideoItem = function(item){
+      if ($scope.playerControl.supports_html5_storage()) $log.log('great');
       $scope.playerControl.addVideoItem(item);
       if (!player){
         player = new YT.Player('player', {
-          height: '225',
-          width: '400',
+          height: '270',
+          width: '480',
           videoId: $scope.playerControl.config.list[$scope.playerControl.config.index]['id'],
           playerVars: {
             controls: '0',
@@ -63,11 +63,27 @@ angular.module('magicListenApp')
     }
 
     $scope.suggestQueries = function(keyword){
-     
-      ExternalMusicService.suggestQueries(keyword)
-        .success(function(response){
-          $log.log(response);
-        }); 
+      var url = "http://suggestqueries.google.com/complete/search";
+      var params = {
+        //hl: "vn",
+        ds: "yt",
+        client: "youtube",
+        hjson: "t",
+        q: keyword,
+        callback:"JSON_CALLBACK",
+      }
+      return $http.jsonp(url, {
+        params: params
+      }).then(function(response){
+        $log.log(response.data[1]);
+        var queries = [];
+        angular.forEach(response.data[1], function(item){
+          queries.push(item[0]);
+        });
+        $log.log(queries);
+        return queries;
+
+      });
     }
 
     $scope.searchLastFmAlbumInfo = function(keyword){
@@ -83,6 +99,13 @@ angular.module('magicListenApp')
           //$scope.lastFmArtists = (response['results']['trackmatches']['track']);
         });
     }
-    $scope.searchYoutube('Thu Hien');
+    /*Initial value search*/
+
+    var randomKeywords = ['Thu Hien','Thu Hien', 'Anh tho', 'Ngoc tan', 'Dau phai boi mua thu', 'Shakira', 'Che Linh', 'Enya'];
+    var ranNum = Math.floor((Math.random()*randomKeywords.length));
+    $scope.searchKeyword = randomKeywords[ranNum];
+    $scope.searchYoutube($scope.searchKeyword);
+    $scope.playerControl = PlayerService;
+
 
   });

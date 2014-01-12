@@ -31,7 +31,13 @@ var playerService = function($window, $log, $rootScope){
 				}
 			}
 		},
-
+		supports_html5_storage: function() {
+		  try {
+		    return 'localStorage' in window && window['localStorage'] !== null;
+		  } catch (e) {
+		    return false;
+		  }
+		},
 		addVideoItem: function(item){
 			this.config.list.push(item);
 		},

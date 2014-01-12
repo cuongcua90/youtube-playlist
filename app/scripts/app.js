@@ -1,9 +1,6 @@
 angular.module('magicListenApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
   'ngRoute',
-  
+  'ui.bootstrap'
 ])
   .config(function ($routeProvider) {
     $routeProvider
