@@ -6,7 +6,7 @@
 	<i class="fa fa-step-backward fa-inverse player-icon" ng-click="playerControl.previousVideo();"></i>
 </div>
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-6 col-xs-12">
 		<div class="youtube-video">
 			<div id="player"></div>
 		</div>
@@ -29,18 +29,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-6 col-xs-12">
 		<div class="row">
 			<form role="search">
-				<div class="form-group col-md-10">
+				<div class="form-group col-md-10 col-xs-10">
 					<input type="text" ng-model="searchKeyword" class="form-control" placeholder="Search" typeahead="query for query in suggestQueries($viewValue) | filter:$viewValue" typeahead-on-select="searchAll(searchKeyword)">
 				</div>
-				<button type="submit" class="btn btn-default col-md-2" ng-click="searchAll(searchKeyword)">Submit</button>
+				<button type="submit" class="btn btn-default col-md-2 col-xs-2" ng-click="searchAll(searchKeyword)">Submit</button>
 			</form>
 		</div>
 		<div class="row">
 			<div ng-class="{'row':$index%3==2}" ng-repeat="videoData in resultYoutubes['items'] track by $index">
-				<div class="col-md-4" ng-click="addVideoItem(videoData)">
+				<div class="col-md-4 col-xs-4" ng-click="addVideoItem(videoData)">
 					<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
 					<p><a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a></p>
 				</div>
@@ -52,54 +52,3 @@
 		</ul>
 	</div>
 </div>
-<div>
-	
-	
-	<div class="col-md-5">
-		Beautiful
-		<div class="col-md-8" ng-repeat="videoData in resultYoutubes['items']">
-			<img src="{{videoData['thumbnail']['sqDefault']}}" style="float:left" ng-click="getRelatedYoutubeVideo(videoData['id'])">
-			<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
-			<div style="clear:both"></div>
-		</div>
-	</div>
-	<div class="col-md-5">
-		Search result
-		<div ng-repeat="trackData in lastFmTracks">
-			<div>
-				<img src="{{trackData['image'][0]['#text']}}" style="float:left">
-				{{trackData['name']}}
-				{{trackData['artist']}}
-			</div>
-			<div style="clear:both"></div>
-
-			<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
-		</div>
-
-		<div ng-repeat="trackData in lastFmAlbums">
-			<div>
-				
-			</div>
-			<div style="clear:both"></div>
-
-			<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
-		</div>
-	</div>
-	<div class="col-md-2">
-		Playlist
-
-		<div ng-repeat="videoData in resultYoutubes['items']">
-			<img src="{{videoData['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoData['id'])">
-			<a href="{{videoData['player']['default']}}" target="_blank"> {{videoData['title']}} </a>
-			
-			<!-- <img src="{{videoData['thumbnail']['hqDefault']}}"> -->
-		</div>
-	</div>
-	<div class="debug">
-		<!-- <pre>{{resultYoutubes['items']|json}}</pre>; -->
-		<pre>{{playerControl|json}}</pre>;
-	</div>	
-	<div ng-repeat="videoRelated in videoRelateds['items']">
-		<img src="{{videoRelated['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoRelated['id'])">
-
-	</div>

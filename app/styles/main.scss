@@ -3,8 +3,8 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 @import 'sass-bootstrap/lib/bootstrap';
 
 .list-youtube {
-    height: 400px;
-    overflow: scroll;   
+    max-height: 400px;
+    overflow: auto;   
     overflow-x : hidden;
 }
 .player-icon {

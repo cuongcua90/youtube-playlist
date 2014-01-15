@@ -18,7 +18,7 @@ angular.module('magicListenApp')
           width: '480',
           videoId: $scope.playerControl.config.list[$scope.playerControl.config.index]['id'],
           playerVars: {
-            controls: '0',
+            controls: '1',
             color: 'red',
             showinfo: '0'
           },

@@ -68,8 +68,12 @@ var playerService = function($window, $log, $rootScope){
 		},
 		nextVideo: function(){
 			if (this.config.isShuffle==false){
-				if (this.config.index < this.config.list.length){
+				if (this.config.index < this.config.list.length-1){
 					this.config.index++;
+					this.config.loadVideoByIndex();
+				}
+				else{
+					this.config.index = 0;
 					this.config.loadVideoByIndex();
 				}
 			}
