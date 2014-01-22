@@ -1,6 +1,7 @@
 angular.module('magicListenApp', [
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'LocalStorageModule'
 ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -21,5 +22,4 @@ angular.module('magicListenApp', [
     tag.src = "//www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
   })

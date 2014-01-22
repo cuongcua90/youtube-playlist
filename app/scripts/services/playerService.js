@@ -1,23 +1,9 @@
 'use strict';
 
-var playerService = function($window, $log, $rootScope){
-	$window.onYouTubeIframeAPIReady = function () {
-		
-	}
-	$window.onPlayerReady = function(evt) {
-		evt.target.playVideo();
-	};
-	$window.onPlayerStateChange = function(evt) {
-		if (evt.data == YT.PlayerState.ENDED){
-			playerControl.nextVideo();
-		}
-
-		$rootScope.$apply(function(){
-			playerControl.config.status = evt.data;
-		});
-	};
+var playerService = function($window, $log, $rootScope, $timeout){
 	var playerControl = {
 		config : {
+			isReady: false,
 			volume: 50,
 			isShow: false,
 			isShuffle: false,
@@ -25,18 +11,11 @@ var playerService = function($window, $log, $rootScope){
 			index: 0,
 			status: -1,
 			list: [],
-			loadVideoByIndex: function(){
-				if (this.list.length > this.index){
-					player.loadVideoById(this.list[this.index]['id']);
-				}
-			}
 		},
-		supports_html5_storage: function() {
-		  try {
-		    return 'localStorage' in window && window['localStorage'] !== null;
-		  } catch (e) {
-		    return false;
-		  }
+		loadVideoByIndex: function(){
+			if (this.config.list.length > this.config.index){
+				player.loadVideoById(this.config.list[this.config.index]['id']);
+			}
 		},
 		addVideoItem: function(item){
 			this.config.list.push(item);
@@ -53,7 +32,7 @@ var playerService = function($window, $log, $rootScope){
 		changeIndex: function(index){
 			if (this.config.index!==index){
 				this.config.index = index;
-				this.config.loadVideoByIndex();
+				this.loadVideoByIndex();
 			}
 		},
 
@@ -70,11 +49,11 @@ var playerService = function($window, $log, $rootScope){
 			if (this.config.isShuffle==false){
 				if (this.config.index < this.config.list.length-1){
 					this.config.index++;
-					this.config.loadVideoByIndex();
+					this.loadVideoByIndex();
 				}
 				else{
 					this.config.index = 0;
-					this.config.loadVideoByIndex();
+					this.loadVideoByIndex();
 				}
 			}
 		},
@@ -82,15 +61,31 @@ var playerService = function($window, $log, $rootScope){
 			if (this.config.isShuffle==false){
 				if (this.config.index > 0){
 					this.config.index --;
-					this.config.loadVideoByIndex();
+					this.loadVideoByIndex();
 				}
 			}
 		},
 
+	};
+	$window.onYouTubeIframeAPIReady = function () {
+		playerControl.config.isReady = true;
+
+	};
+	$window.onPlayerReady = function(evt) {
+		evt.target.playVideo();
+	};
+	$window.onPlayerStateChange = function(evt) {
+		if (evt.data == YT.PlayerState.ENDED){
+			playerControl.nextVideo();
+		}
+
+		$rootScope.$apply(function(){
+			playerControl.config.status = evt.data;
+		});
 	};
 	return playerControl;
 	
 };
 
 angular.module('magicListenApp')
-  .factory('PlayerService', ['$window','$log', '$rootScope', playerService]);
+  .factory('PlayerService', ['$window','$log', '$rootScope', '$timeout',playerService]);

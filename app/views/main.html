@@ -1,12 +1,12 @@
 <div class="navbar navbar-fixed-bottom navbar-inverse text-center" ng-show="playerControl.config.isValid">
+	<i class="fa fa-step-forward fa-inverse player-icon" ng-click="playerControl.nextVideo();"></i>
 	<i class="fa fa-inverse player-icon fa-pause" ng-click="playerControl.pauseVideo();" ng-show="playerControl.config.status==1"></i>
 	<i class="fa fa-play fa-inverse player-icon" ng-show="playerControl.config.status==2||playerControl.config.status==0" ng-click="playerControl.playVideo();"></i>
 	<i class="fa fa-spinner fa-inverse fa-spin player-icon" ng-show="playerControl.config.status==3||playerControl.config.status==-1"></i>
-	<i class="fa fa-step-forward fa-inverse player-icon" ng-click="playerControl.nextVideo();"></i>
 	<i class="fa fa-step-backward fa-inverse player-icon" ng-click="playerControl.previousVideo();"></i>
 </div>
 <div class="row">
-	<div class="col-md-6 col-xs-12">
+	<div class="col-md-6 col-xs-12 col-lg-6">
 		<div class="youtube-video">
 			<div id="player"></div>
 		</div>
@@ -16,7 +16,7 @@
 					<span ng-show="playerControl.config.index!==$index">
 						{{$index+1}}
 					</span>
-					<span ng-show="playerControl.config.index===$index">
+					<span ng-show="playerCaontrol.config.index===$index">
 						<i class="fa fa-play"></i>
 					</span>
 					<!-- <a class="pull-left" href="#">
@@ -29,7 +29,16 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6 col-xs-12">
+	<div class="col-md-6 col-xs-12 col-lg-6">
+		<div class="row">
+			<h3 ng-show="videoRelateds['item'].length>0">Videos relate with video has just added</h3>
+			<div ng-class="{'row':$index%3==2}" ng-repeat="videoRelated in videoRelateds['items'] track by $index">
+				<div class="col-md-4 col-xs-4" ng-click="addVideoItem(videoRelated)">
+					<img src="{{videoRelated['thumbnail']['sqDefault']}}" ng-click="getRelatedYoutubeVideo(videoRelated['id'])">
+					<p><a href="{{videoRelated['player']['default']}}" target="_blank"> {{videoRelated['title']}} </a></p>
+				</div>
+			</div>	
+		</div>
 		<div class="row">
 			<form role="search">
 				<div class="form-group col-md-10 col-xs-10">
@@ -50,5 +59,6 @@
 			<li class="previous"><a href="#">&larr; Previous</a></li>
 			<li class="next"><a href="#">Next &rarr;</a></li>
 		</ul>
+
 	</div>
 </div>

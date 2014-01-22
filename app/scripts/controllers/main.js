@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('magicListenApp')
-  .controller('MainCtrl', function ($scope, $log, $window, $http, ExternalMusicService, PlayerService) {
+  .controller('MainCtrl', function ($scope, $timeout, $log, $window, $http, ExternalMusicService, PlayerService, localStorageService) {
 
     $scope.searchAll = function(keyword){
       $scope.searchYoutube(keyword);
@@ -9,9 +9,7 @@ angular.module('magicListenApp')
       $scope.searchLastFmAlbumInfo(keyword); 
       $scope.searchLastFmArtistInfo(keyword);    
     }
-    $scope.addVideoItem = function(item){
-      if ($scope.playerControl.supports_html5_storage()) $log.log('great');
-      $scope.playerControl.addVideoItem(item);
+    $scope.initialPlayer = function(){
       if (!player){
         player = new YT.Player('player', {
           height: '270',
@@ -30,15 +28,24 @@ angular.module('magicListenApp')
         $scope.playerControl.config.isValid = true;
       }
     }
+    $scope.addVideoItem = function(item){
+      $scope.playerControl.addVideoItem(item);
+      $scope.initialPlayer();
+      
+      $scope.addListToLocalStorage();
+    }
     $scope.removeVideoByIndex = function(index){
-      $scope.playerControl.config.list.splice(index,1);
+      PlayerService.config.list.splice(index,1);
+      $log.log(index);
+      $log.log($scope.playerControl.config.list.length);
+      $log.log($scope.playerControl.config.index);
       if ($scope.playerControl.config.index === index){
         if (index === $scope.playerControl.config.list.length){
           $scope.playerControl.config.index--;
         }
-        $scope.playerControl.config.loadVideoByIndex();
+        $scope.playerControl.loadVideoByIndex();
       }
-
+      $scope.addListToLocalStorage();
     }
     $scope.searchYoutube = function(keyword){
     	ExternalMusicService.searchYoutube(keyword)
@@ -80,7 +87,7 @@ angular.module('magicListenApp')
         angular.forEach(response.data[1], function(item){
           queries.push(item[0]);
         });
-        $log.log(queries);
+        
         return queries;
 
       });
@@ -99,13 +106,44 @@ angular.module('magicListenApp')
           //$scope.lastFmArtists = (response['results']['trackmatches']['track']);
         });
     }
-    /*Initial value search*/
 
+    $scope.addListToLocalStorage = function(){
+      localStorageService.add('magicListConfig',$scope.playerControl.config);
+    }
+
+    $scope.initialValue = function(){
+
+    }
+
+    /*Initial value search*/
     var randomKeywords = ['Thu Hien','Thu Hien', 'Anh tho', 'Ngoc tan', 'Dau phai boi mua thu', 'Shakira', 'Che Linh', 'Enya'];
     var ranNum = Math.floor((Math.random()*randomKeywords.length));
     $scope.searchKeyword = randomKeywords[ranNum];
     $scope.searchYoutube($scope.searchKeyword);
-    $scope.playerControl = PlayerService;
+    $scope.playerControl = PlayerService; 
+    var localValue =  localStorageService.get('magicListConfig');
+    if (localValue!==null){
+      $scope.playerControl.config = localValue;
+      $scope.playerControl.config.isReady = false;
+    }
+    if ($scope.playerControl.config.list.length > 0){
+      if ($scope.playerControl.config.isReady){
+        $scope.initialPlayer();  
+      }
+      else{
+        $timeout(function(){
+          if ($scope.playerControl.config.isReady){
+            $scope.initialPlayer();  
+          }    
+        },2000)
+      }
+      
+      //$log.log($scope.playerControl.config.index);
+    }
+    $scope.storageType = 'Local storage';
 
+    if (!localStorageService.isSupported) {
+      $scope.storageType = 'Cookie';
+    }
 
   });

@@ -15,7 +15,7 @@ var apiExternalMusic = function($http) {
   		var url = youtubeApiUrl+ encodeURIComponent(keyword); 
   		var params = {
             format: 5,
-            'max-results': 12,
+            'max-results': 6,
             v: 2,
             alt: 'jsonc',
         };
@@ -28,7 +28,8 @@ var apiExternalMusic = function($http) {
       var url = "http://gdata.youtube.com/feeds/api/videos/"+videoId+"/related";
       var params = {
         v: 2,
-        alt: 'jsonc'
+        alt: 'jsonc',
+        'max-results': 6
       }
       return $http.get(url, {
           params: params
